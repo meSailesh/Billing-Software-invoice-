@@ -32,7 +32,7 @@ $invoice->checkLoggedIn();?>
         <a href="invoice_list.php"><div class="panel">Invoice List</div></a>   
       </div>
       <div class="col-md-4">
-      <a href="customer_list.php"><div class="panel">Ledger</div></a>   
+      <a href="customer_list.php"><div class="panel">Customer List</div></a>   
       </div>
     </div>
   </div>

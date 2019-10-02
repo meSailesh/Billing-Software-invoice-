@@ -161,8 +161,8 @@ class Invoice{
 	public function insertItems($POST) {
 		for ($i = 0; $i < count($POST['productName']); $i++) {
 			$sqlInsertItem = "
-			INSERT INTO ".$this->productTable."(item_name, user_id, item_price) 
-			VALUES ('".$POST['productName'][$i]."', '".$_SESSION['userid']."', '".$POST['price'][$i]."')";			
+			INSERT INTO ".$this->productTable."( user_id, item_name, item_price) 
+			VALUES ('".$POST['userId']."', '".$POST['productName'][$i]."',  '".$POST['price'][$i]."')";			
 			$result = mysqli_query($this->dbConnect, $sqlInsertItem);
 		}      
 	}
