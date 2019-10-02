@@ -12,7 +12,15 @@ This software is developed for creating invoices and managing the transactions o
 
 **Instructions to run project** 
 1. Install Xammp for windows.
-2. Download this software and paste it in xampp/htdocs folder.
+2. Download this software and copy it to xampp/htdocs folder.
 3. Open Apache server and mysql.
 4. Open phpmyadmin from browser and create databse with name billing_software.
-5. Go to import section and import the sql file located in database folder of the project
+5. Go to import section and import the sql file located in database folder of the project.
+6. Open localhost/invoice_soft from browser.
+
+**Login credentials**
+username: admin@dev.com
+password: 123456789
+
+
+### Feel free to give feedback and ask queries. You can also contribute to this project ###
