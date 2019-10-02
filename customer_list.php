@@ -24,6 +24,7 @@ $ledger->checkLoggedIn();
         <thead>
           <tr>
           <th>Customer Name</th>
+          <th>Created Date</th>
             <th>Customer Address</th>
             <th>Phone Number</th>
             <th>Pan Number</th>
@@ -41,11 +42,12 @@ $ledger->checkLoggedIn();
               <tr>
                 <td>'.$ledgerDetails["customer_name"].'</td>
                 <td>'.$ledgerDate.'</td>
-                <td>'.$ledgerDetails["customer_name"].'</td>
-                <td>'.$ledgerDetails["customer_name"].'</td>
+                <td>'.$ledgerDetails["customer_address"].'</td>
+                <td>'.$ledgerDetails["customer_number"].'</td>
+                <td>'.$ledgerDetails["customer_pan"].'</td>
                 <td><a href="edit_customer.php?customer_id='.$ledgerDetails["customer_id"].'"  title="Edit Customer Details"><span class="glyphicon glyphicon-edit"></span></a></td>
                 <td><a href="transactions.php?update_id='.$ledgerDetails["customer_id"].'"  title="View Transactions"><span class="glyphicon glyphicon-file"></span></a></td>
-                <td><a href="#" id="'.$ledgerDetails["customer_id"].'" class="deleteInvoice"  title="Delete Customer"><span class="glyphicon glyphicon-remove"></span></a></td>
+                <td><a href="#" id="'.$ledgerDetails["customer_id"].'" class="deleteCustomer"  title="Delete Customer"><span class="glyphicon glyphicon-remove"></span></a></td>
               </tr>
             ';
         } 
