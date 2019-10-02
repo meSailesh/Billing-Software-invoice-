@@ -103,18 +103,11 @@ class Ledger{
 		return $row;
 	}	
 	
-	public function deleteInvoiceItems($invoiceId){
+	public function deleteCustomer($customerId){
 		$sqlQuery = "
-			DELETE FROM ".$this->invoiceOrderItemTable." 
-			WHERE order_id = '".$invoiceId."'";
-		mysqli_query($this->dbConnect, $sqlQuery);				
-	}
-	public function deleteInvoice($invoiceId){
-		$sqlQuery = "
-			DELETE FROM ".$this->invoiceOrderTable." 
-			WHERE order_id = '".$invoiceId."'";
-		mysqli_query($this->dbConnect, $sqlQuery);	
-		$this->deleteInvoiceItems($invoiceId);	
+			DELETE FROM ".$this->CustomerTable." 
+			WHERE customer_id = '".$customerId."'";
+		mysqli_query($this->dbConnect, $sqlQuery);		
 		return 1;
 	}
 
