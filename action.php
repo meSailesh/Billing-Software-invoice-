@@ -23,7 +23,7 @@ if($_POST['action'] == 'delete_customer' && $_POST['id']) {
 }
 
 if($_POST['action'] == 'fill_fields' && $_POST['id']) {
-	$details = $ledger->getItemDetails($_POST['id']);	
+	$details = $invoice->getItemDetails($_POST['id']);	
 	$jsonResponse = array(
 		"name" => $details->item_name,
 		"price" => $details->item_price

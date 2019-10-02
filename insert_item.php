@@ -8,7 +8,7 @@ $error= '';
 $invoice = new Invoice();
 $ledger = new Ledger();
 $invoice->checkLoggedIn();
-if(isset($_POST['invoice_btn'])) {
+if(isset($_POST['item_btn'])) {
   $invoice -> insertItems($_POST);
   $success = true;
 
@@ -36,7 +36,7 @@ if(isset($_POST['invoice_btn'])) {
 			</div></br></br>
 			<div class="row">
 				<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-					<table class="table table-bordered table-hover" id="invoiceItem" >	
+					<table class="table table-bordered table-hover" id="insertItem" >	
 						<tr>
 							<th width="4%"><input id="checkAll" class="formcontrol" type="checkbox"></th>
 							<th width="48%">Item Name</th>
@@ -54,13 +54,13 @@ if(isset($_POST['invoice_btn'])) {
 			<div class="row my-2">
 				<div class="col-xs-12 col-sm-3 col-md-3 col-lg-3 ">
 					<button class="btn btn-danger delete" id="removeRows" type="button">- Delete</button>
-					<button class="btn btn-success" id="addRows" type="button">+ Add More</button>
+					<button class="btn btn-success" id="addItemRows" type="button">+ Add More</button>
 				</div>
         </div>
       <div class="clearfix"></div>	
       <div class="form-group center">
 						<input type="hidden" value="<?php echo $_SESSION['userid']; ?>" class="form-control" name="userId">
-						<input data-loading-text="Saving Invoice..." type="submit" name="invoice_btn" value="Save Items" class="btn btn-primary submit_btn receipt-save-btn">						
+						<input data-loading-text="Saving Items..." type="submit" name="item_btn" value="Save Items" class="btn btn-primary submit_btn receipt-save-btn">						
 					</div>	      	
 		</div>
 	</form>			

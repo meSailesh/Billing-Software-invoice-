@@ -31,6 +31,18 @@
 		$('#checkAll').prop('checked', false);
 		calculateTotal();
 	});		
+
+	var count = $(".itemRow").length;
+	$(document).on('click', '#addItemRows', function() { 
+		count++;
+		var htmlRows = '';
+		htmlRows += '<tr>';
+		htmlRows += '<td><input class="itemRow" type="checkbox"></td>';                    
+		htmlRows += '<td><input type="text" name="productName[]" id="productName_'+count+'" class="form-control" autocomplete="off"></td>';		
+		htmlRows += '<td><input type="number" name="price[]" id="price_'+count+'" class="form-control price" autocomplete="off"></td>';		         
+		htmlRows += '</tr>';
+		$('#insertItem').append(htmlRows);
+	}); 
 	
 	$(document).on('blur', "[id^=quantity_]", function(){
 		calculateTotal();
