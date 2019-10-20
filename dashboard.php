@@ -17,7 +17,7 @@ $invoice->checkLoggedIn();?>
   <div class="col-md-7">
     <div class="row menus">
     <div class="col-md-4">
-        <a href="insert_item.php"><div class="panel">Insert Item</div></a>   
+        <a href="insert_item.php"><div class="panel">Insert Item7c41vjk85l2</div></a>   
       </div>
       <div class="col-md-4">
       <a href="create_invoice.php"><div class="panel">Create Invoice</div></a>   
