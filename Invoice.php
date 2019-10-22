@@ -173,5 +173,12 @@ class Invoice{
 		WHERE item_number = '".$itemId."'";
 		return  $this->getField($sqlQuery);
 	}
+
+	public function getAllItems() {
+		$sqlQuery = "
+		SELECT * FROM ".$this->productTable."
+		WHERE user_id = '".$_SESSION['userid']."'";
+		return  $this->getData($sqlQuery);
+	}
 }
 ?>
