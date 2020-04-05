@@ -1,16 +1,20 @@
 <?php
 session_start();
 include 'ledger.php';
-$ledger = new Ledger();
 include 'Invoice.php';
+require("nepali-date.php");
+$ledger = new Ledger();
 $invoice = new Invoice();
+$nepali_date = new nepali_date();
 $invoice->checkLoggedIn();
 if(!empty($_GET['invoice_id']) && $_GET['invoice_id']) {
 	$invoiceValues = $invoice->getInvoice($_GET['invoice_id']);		
 	$invoiceItems = $invoice->getInvoiceItems($_GET['invoice_id']);
 	$customerDetails = $ledger->getCustomer($invoiceValues['customer_id']);		
 }
-$invoiceDate = date("d/M/Y", strtotime($invoiceValues['order_date']));
+$invoiceDate = $invoiceValues['order_date'];
+$date = $invoice -> NepaliDate($invoiceDate, $nepali_date);
+
 $output = '';
 $output .= '
 
@@ -36,7 +40,7 @@ $output .= '
 	</td>
 	<td width="35%">         
 	Invoice No. : '.$invoiceValues['order_id'].'<br />
-	Invoice Date : '.$invoiceDate.'<br />
+	Invoice Date : '.$date['y'].'-'.$date['m'].'-'.$date['d'].'<br />
 	</td>
 	</tr>
 	</table>

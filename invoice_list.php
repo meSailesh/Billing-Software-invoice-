@@ -14,7 +14,7 @@ $invoice->checkLoggedIn();
 <?php include('container.php');?>
 <div class="container invoice-list-container">		
   <div><a class="btn btn-warning back_btn" href="javascript:history.go(-1)">&#8592 Go Back</a></div>
-	  <h2 class="title">PHP Invoice System</h2>		
+	  <h2 class="title">Invoice List</h2>		
     <?php 
     $invoiceList = $invoice->getInvoiceList();
      if(empty($invoiceList)){
@@ -38,21 +38,13 @@ $invoice->checkLoggedIn();
         <?php		
         foreach($invoiceList as $invoiceDetails){
           $customerDetails = $ledger -> getCustomer($invoiceDetails['customer_id']);
-			    $invoiceDate = date("d/M/Y, H:i:s", strtotime($invoiceDetails["order_date"]));
-
-          $invoiceYear = date("Y", strtotime($invoiceDetails["order_date"]));
-          $invoiceMonth = date("m", strtotime($invoiceDetails["order_date"]));
-          $invoiceDay = date("d", strtotime($invoiceDetails["order_date"]));
-
-          $date_ne = $nepali_date->get_nepali_date($invoiceYear, $invoiceMonth, $invoiceDay);
-          $year = $date_ne['y'];
-          ($date_ne['m'] < 10) ? $month = 0 . $date_ne['m'] : $month = $date_ne['m'];
-          ($date_ne['d'] < 10) ? $day = 0 . $date_ne['d'] : $day = $date_ne['d'];
-
+			    $invoiceDate = $invoiceDetails['order_date'];
+          $date = $invoice -> NepaliDate($invoiceDate, $nepali_date);
+          
             echo '
               <tr>
                 <td>'.$invoiceDetails["order_id"].'</td>
-                <td>'.$year.'-'.$month.'-'.$day.'</td>
+                <td>'.$date['y'].'-'.$date['m'].'-'.$date['d'].'</td>
                 <td>'.$customerDetails["customer_name"].'</td>
                 <td>'.$invoiceDetails["order_total_after_tax"].'</td>
                 <td>'.$invoiceDetails["order_total_amount_due"].'</td>

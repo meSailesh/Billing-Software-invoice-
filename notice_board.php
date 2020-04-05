@@ -1,42 +1,23 @@
- <?php 
-    $db= new mysqli("localhost", "root", "","billing_software")or die("Couldn't connect to database");
+ <?php
+ $IsDue = false;  
+ $today= strtotime(date("Y/m/d"));
+ $invoiceList = $invoice ->getInvoiceList();
+foreach($invoiceList as $invoice){
+  $originalOrderDate = $invoice['order_date'];
+  $dueAmount = (float)$invoice['order_total_amount_due'];
+  $customerId = $invoice['customer_id'];
+  $invoiceId = $invoice['order_id'];
+  $parsedDate = strtotime(date("Y-m-d",strtotime($originalOrderDate )));
+  $difference =  (int)(($today - $parsedDate)/60/60/24);
 
-    $sql_invoice="SELECT * FROM `invoice_order` ORDER BY `order_date` ASC";
-    
-
-    $run_invoice=mysqli_query($db,$sql_invoice);
-    
-
-
-    function get_customer($id){
-      $sql_customer="select * from customers";
-      $run_customer=mysqli_query( $GLOBALS['db'],$sql_customer);
-      while($row=mysqli_fetch_array($run_customer)){
-        if($id==$row['customer_id']){
-        $customer_name=$row['customer_name'];
-        return $customer_name;
-        }
-      }
-    }
-
-    
-
-    while($row=mysqli_fetch_array($run_invoice)){
-      $today= strtotime(date("Y/m/d"));
-      $original_order_date = $row['order_date'];
-      $only_date = strtotime(date("Y-m-d",strtotime($original_order_date)));
-      $value = ($today - $only_date)/60/60/24;
-
-      $id_p=$row['customer_id'];
-      
-      if($value>=15 && ($row['order_total_amount_due']>0) ){
-        $name=get_customer($id_p);
-        echo "<li class='list-group-item notice-information'>Unpaid invoice of <b>".$name."</b>'s invoice no. <b>".$row['order_id']."</b> for ".$value." days.<tr>";
-      }
-      else{ 
-        echo '<div class="alert alert-success" role="alert">We are good!</div>';	
-        }
-
-     
-    }
+  if($difference >= 15 && $dueAmount > 0){
+    $customer = $ledger -> getCustomer($customerId);
+    echo'<li class="list-group-item alert-warning">Unpaid invoice of <b>'.$customer['customer_name'].'</b>\'s invoice no. <b>'.$invoiceId.'</b> for '.$difference.' days.</li>';
+    $IsDue = true;
+  }
+  
+}
+if(!$IsDue){
+  echo'<li class="list-group-item alert-success">We are good! No due payments.</li>';
+}
     ?>

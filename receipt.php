@@ -10,7 +10,8 @@ $ledger = new Ledger();
 $invoice->checkLoggedIn();
 $customerList = $ledger->getCustomerList();
 if(isset($_POST['invoice_btn'])) {
-	if(empty($_POST['customerId'])) {
+	$customerId = $_POST['customerId'];
+	if(empty($customerId)) {
 		$error = "Please Select Customer First.";
 	}
 
@@ -18,18 +19,18 @@ if(isset($_POST['invoice_btn'])) {
 		$error = "Please Enter Invoice Number.";
 	}
 
-	else if(!$invoice->validateInvoice($_POST['invoiceNumber'])) {
-		$error = "Invoice Not found.";
+	else if(!$invoice->validateInvoice($_POST['invoiceNumber'], $customerId)) {
+		$error = "Invoice Not found for the current user!.";
 	}
 	
 	else if(empty($_POST['paidAmount']) ) {
 		$error = "Please enter amount to make payment.";
 	}
 	else {
-		$due_amount = $invoice -> getTotalDue($_POST['invoiceNumber']) ->order_total_amount_due;
+		$due_amount = $invoice -> getTotalDue($_POST['invoiceNumber']);
 		$updatedAmount = $due_amount - $_POST['paidAmount'];
 		if($updatedAmount <=0) {
-			$error = "Due amount cannot be negative";
+			$error = "Hey! It seems the due amount is less than this value. Please recheck from invoice list.";
 		}
 		else{
 			$ledger->createReceipt($_POST);
@@ -45,7 +46,7 @@ if(isset($_POST['invoice_btn'])) {
 <link href="css/style.css" rel="stylesheet">
 <?php include('container.php');?>
 <div class="container content-invoice">
-	<div><a class="btn btn-warning back_btn" href="javascript:history.go(-1)">&#8592 Go Back</a></div>
+	<div><a class="btn btn-warning back_btn" href="dashboard.php">&#8592 Go Back</a></div>
 	<?php
 		if($success) {
 			echo '<div class="alert alert-success" role="alert">Payment saved Successfully!</div>';	
@@ -58,7 +59,7 @@ if(isset($_POST['invoice_btn'])) {
 		<div class="load-animate animated fadeInUp">
 			<div class="row">
 				<div class="col-xs-8 col-sm-8 col-md-8 col-lg-8">
-					<h2 class="title">PHP Invoice System</h2>	
+					<h2 class="title">Make Payment</h2>	
 				</div>		    		
 			</div>
 			<input id="currency" type="hidden" value="$">

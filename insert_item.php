@@ -31,7 +31,7 @@ if(isset($_POST['item_btn'])) {
 		<div class="load-animate animated fadeInUp">
 			<div class="row">
 				<div class="col-xs-8 col-sm-8 col-md-8 col-lg-8">
-					<h2 class="title">PHP Invoice System</h2>	
+					<h2 class="title">Insert New Items</h2>	
 				</div>		    		
 			</div></br></br>
 			<div class="row">

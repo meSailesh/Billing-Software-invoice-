@@ -138,31 +138,31 @@ tbody{
 .sidebar ul.nav li a{
 	font-weight: 700;
 }
-.btn-success, .panel-success {
+.btn-success {
     background-color: #27c24c !important;
     border-color: #27c24c !important;
     color: #000 !important;
 }
-.btn-primary, .panel-primary {
+.btn-primary {
     border-color: #7266ba;
     color: #000 !important;
 }
-.btn-info, .panel-info {
+.btn-info {
     background-color: #23b7e5;
     border-color: #23b7e5;
     color: #000 !important;
 }
-.btn-warning, .panel-warning {
+.btn-warning {
     background-color: #fad733;
     border-color: #fad733;
     color: #000 !important;
 }
-.btn-danger, .panel-danger {
+.btn-danger{
     background-color: #f05050;
     border-color: #f05050;
     color: #000 !important;
 }
-.btn-dark, .panel-dark {
+.btn-dark {
     background-color: #3a3f51;
     border-color: #3a3f51;
     color: #000 !important;

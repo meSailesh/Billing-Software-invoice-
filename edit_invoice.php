@@ -25,7 +25,7 @@ if(!empty($_GET['update_id']) && $_GET['update_id']) {
 	    	<div class="load-animate animated fadeInUp">
 		    	<div class="row">
 		    		<div class="col-xs-8 col-sm-8 col-md-8 col-lg-8">
-		    			<h1 class="title">PHP Invoice System</h1>			
+		    			<h1 class="title">Edit Invoice</h1>			
 		    		</div>		    		
 		    	</div>
 		      	<input id="currency" type="hidden" value="$">
