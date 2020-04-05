@@ -22,7 +22,7 @@ if (!empty($_POST['email']) && !empty($_POST['pwd'])) {
 <script src="js/invoice.js"></script>
 <link href="css/style.css" rel="stylesheet">
 </head>
-<div class= "container-fluid" style= "min-height:100vh">
+<div class= "container-fluid" style= "min-height:95vh">
 <div class="row">	
 	<div class="demo-heading">
 		<h2 style= "text-align: center;">Welcome to Billing Software</h2>

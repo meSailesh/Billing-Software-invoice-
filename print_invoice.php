@@ -21,7 +21,7 @@ $output .= '
 <table width="100%" border="0" cellpadding="5" cellspacing="0">
 <tr>
 	<td width="20%" align="center" style="font-size:18px"><img src="./images/logo.png" width="100px" widt></td>
-	<td width="40%" align="left" style="font-size:24px"><b>PRABHAT AGROBHET</b><br> <span style="font-size:15px" > Dumbre, Tanahunn, Nepal<br>065-580161, 9846112722<br>PAN: 301522520</span></td>
+	<td width="40%" align="left" style="font-size:24px"><b>PRABHAT AGROVET</b><br> <span style="font-size:15px" > Dumre, Tanahun, Nepal<br>065-580162, 9856080162<br>PAN: 301522520</span></td>
 	
 	</tr>	
 <tr>

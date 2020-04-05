@@ -32,4 +32,4 @@
       </div>
     </div>
 	
-	<div class="container-fluid" style="min-height:550px;">
+	<div class="container-fluid" style="min-height:100vh;">
