@@ -3,8 +3,10 @@ session_start();
 include('header.php');
 include 'ledger.php';
 include 'Invoice.php';
+require("nepali-date.php");
 $ledger = new Ledger();
 $invoice = new Invoice();
+$nepali_date = new nepali_date();
 $invoice->checkLoggedIn();
 ?>
 <script src="js/invoice.js"></script>
@@ -36,11 +38,21 @@ $invoice->checkLoggedIn();
         <?php		
         foreach($invoiceList as $invoiceDetails){
           $customerDetails = $ledger -> getCustomer($invoiceDetails['customer_id']);
-			$invoiceDate = date("d/M/Y, H:i:s", strtotime($invoiceDetails["order_date"]));
+			    $invoiceDate = date("d/M/Y, H:i:s", strtotime($invoiceDetails["order_date"]));
+
+          $invoiceYear = date("Y", strtotime($invoiceDetails["order_date"]));
+          $invoiceMonth = date("m", strtotime($invoiceDetails["order_date"]));
+          $invoiceDay = date("d", strtotime($invoiceDetails["order_date"]));
+
+          $date_ne = $nepali_date->get_nepali_date($invoiceYear, $invoiceMonth, $invoiceDay);
+          $year = $date_ne['y'];
+          ($date_ne['m'] < 10) ? $month = 0 . $date_ne['m'] : $month = $date_ne['m'];
+          ($date_ne['d'] < 10) ? $day = 0 . $date_ne['d'] : $day = $date_ne['d'];
+
             echo '
               <tr>
                 <td>'.$invoiceDetails["order_id"].'</td>
-                <td>'.$invoiceDate.'</td>
+                <td>'.$year.'-'.$month.'-'.$day.'</td>
                 <td>'.$customerDetails["customer_name"].'</td>
                 <td>'.$invoiceDetails["order_total_after_tax"].'</td>
                 <td>'.$invoiceDetails["order_total_amount_due"].'</td>

@@ -1,7 +1,7 @@
 <?php 
 session_start();
 include('header.php');
-include 'Ledger.php';
+include 'ledger.php';
 $ledger = new Ledger();
 $ledger->checkLoggedIn();
 if(!empty($_POST['companyName']) && $_POST['companyName']) {	
