@@ -1,23 +1,27 @@
 <?php
 session_start();
 include 'ledger.php';
-$ledger = new Ledger();
 include 'Invoice.php';
+require("nepali-date.php");
+$ledger = new Ledger();
 $invoice = new Invoice();
+$nepali_date = new nepali_date();
 $invoice->checkLoggedIn();
 if(!empty($_GET['invoice_id']) && $_GET['invoice_id']) {
 	$invoiceValues = $invoice->getInvoice($_GET['invoice_id']);		
 	$invoiceItems = $invoice->getInvoiceItems($_GET['invoice_id']);
 	$customerDetails = $ledger->getCustomer($invoiceValues['customer_id']);		
 }
-$invoiceDate = date("d/M/Y", strtotime($invoiceValues['order_date']));
+$invoiceDate = $invoiceValues['order_date'];
+$date = $invoice -> NepaliDate($invoiceDate, $nepali_date);
+
 $output = '';
 $output .= '
 
 <table width="100%" border="0" cellpadding="5" cellspacing="0">
 <tr>
 	<td width="20%" align="center" style="font-size:18px"><img src="./images/logo.png" width="100px" widt></td>
-	<td width="40%" align="left" style="font-size:24px"><b>PRABHAT AGROBHET</b><br> <span style="font-size:15px" > Dumbre, Tanahunn, Nepal<br>065-580161, 9846112722<br>PAN: 301522520</span></td>
+	<td width="40%" align="left" style="font-size:24px"><b>PRABHAT AGROVET</b><br> <span style="font-size:15px" > Dumre, Tanahun, Nepal<br>065-580162, 9856080162<br>PAN: 301522520</span></td>
 	
 	</tr>	
 <tr>
@@ -36,7 +40,7 @@ $output .= '
 	</td>
 	<td width="35%">         
 	Invoice No. : '.$invoiceValues['order_id'].'<br />
-	Invoice Date : '.$invoiceDate.'<br />
+	Invoice Date : '.$date['y'].'-'.$date['m'].'-'.$date['d'].'<br />
 	</td>
 	</tr>
 	</table>

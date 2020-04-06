@@ -13,7 +13,7 @@ $invoice->checkLoggedIn();
   <a class="btn btn-warning back_btn" href="javascript:history.go(-1)">&#8592 Go Back</a>
   <!-- <a class="btn btn-info print_btn pull-right">Print</a> -->
   </div>
-	  <h2 class="title">PHP Invoice System</h2>		
+	  <h2 class="title">Item List</h2>		
     <?php 
     $ItemList = $invoice->getAllItems();
      if(empty($ItemList)){

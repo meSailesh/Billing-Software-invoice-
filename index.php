@@ -21,13 +21,14 @@ if (!empty($_POST['email']) && !empty($_POST['pwd'])) {
 <title>Billing & Invoice Software</title>
 <script src="js/invoice.js"></script>
 <link href="css/style.css" rel="stylesheet">
-<div class= "container-fluid" style= "min-height:550px">
+</head>
+<div class= "container-fluid" style= "min-height:95vh">
 <div class="row">	
 	<div class="demo-heading">
-		<h2>Welcome to Billing Software</h2>
+		<h2 style= "text-align: center;">Welcome to Billing Software</h2>
 	</div>
 	<div class="login-form">		
-		<h4>Invoice User Login:</h4>		
+		<h4>Admin Login:</h4>		
 		<form method="post" action="">
 			<div class="form-group">
 			<?php 
@@ -43,7 +44,7 @@ if (!empty($_POST['email']) && !empty($_POST['pwd'])) {
 				<input type="password" class="form-control" name="pwd" placeholder="Password" required>
 			</div>  
 			<div class="form-group">
-				<button type="submit" name="login" class="btn btn-info">Login</button>
+				<button type="submit" name="login" class="btn btn-success">Login</button>
 			</div>
 		</form>		
 	</div>		

@@ -1,3 +1,29 @@
+@font-face {
+    font-family: 'Roboto Bold';
+    src: url('/css/Roboto-Bold.ttf');
+}
+
+@font-face {
+    font-family: 'Roboto Medium';
+    src: url('/css/Roboto-Medium.ttf');
+}
+@font-face {
+    font-family: 'Open Sans';
+    src: url('/css/OpenSans-Regular.ttf');
+}
+@font-face {
+    font-family: 'Open Sans Semi';
+    src: url('/css/OpenSans-SemiBold.ttf');
+}
+@font-face {
+    font-family: 'Open Sans Bold';
+    src: url('/css/OpenSans-Bold.ttf');
+}
+@font-face {
+    font-family: 'Glyphicons Halflings';
+    src: url('../fonts/glyphicons-halflings-regular.eot');
+    src: url('../fonts/glyphicons-halflings-regular.eot?#iefix') format('embedded-opentype'), url('../fonts/glyphicons-halflings-regular.woff') format('woff'), url('../fonts/glyphicons-halflings-regular.ttf') format('truetype'), url('../fonts/glyphicons-halflings-regular.svg#glyphicons-halflingsregular') format('svg');
+  }
 html {
     background-color: #f0f3f4;
     position: relative;
@@ -9,22 +35,15 @@ body {
     background: -webkit-linear-gradient(to right, #ff6a00, #ee0979);  /* Chrome 10-25, Safari 5.1-6 */
     background: linear-gradient(to right, #ff6a00, #ee0979); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */    
     color: black;
-
-    font-size: 16px;
+    font-family: 'Roboto';   
+    font-size: 18px;
     line-height: 1.42857;
     
 }
 tbody{
     color: black;
 }
-.footer {
-  position: absolute;
-  bottom: 0;
-  width: 100%;  
-  height: 60px;
-  background-color: #f5f5f5;
-  padding-top:15px;
-}
+
 .sub-header {
   padding-bottom: 10px;
   border-bottom: 1px solid #eee;
@@ -138,37 +157,44 @@ tbody{
 .sidebar ul.nav li a{
 	font-weight: 700;
 }
-.btn-success, .panel-success {
+.btn-success {
     background-color: #27c24c !important;
     border-color: #27c24c !important;
     color: #000 !important;
 }
-.btn-primary, .panel-primary {
+.btn-primary {
     border-color: #7266ba;
     color: #000 !important;
 }
-.btn-info, .panel-info {
+.btn-info {
     background-color: #23b7e5;
     border-color: #23b7e5;
     color: #000 !important;
 }
-.btn-warning, .panel-warning {
+.btn-warning {
     background-color: #fad733;
     border-color: #fad733;
     color: #000 !important;
 }
-.btn-danger, .panel-danger {
+.btn-danger{
     background-color: #f05050;
     border-color: #f05050;
     color: #000 !important;
 }
-.btn-dark, .panel-dark {
+.btn-dark {
     background-color: #3a3f51;
     border-color: #3a3f51;
     color: #000 !important;
 }
 .footer{
-	z-index: 9999;
+    z-index: 9999;
+    background-color: black;
+    color: white;
+    font-size: 12px;
+    text-align: center;
+    padding: 5px;
+    margin: 0;
+    height: 31px;
 }
 .btn i{
 	padding-left:5px;

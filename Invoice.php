@@ -40,6 +40,17 @@ class Invoice{
 		return $data;
 	}
 
+	private function getSingleData($sqlQuery) {
+		$result = mysqli_query($this->dbConnect, $sqlQuery);
+		if(!$result){
+			die('Error in query: '. mysqli_error());
+		}
+	
+		$data = mysqli_fetch_assoc($result);
+		return $data;
+	}
+
+
 	private function getNumRows($sqlQuery) {
 		$result = mysqli_query($this->dbConnect, $sqlQuery);
 		if(!$result){
@@ -99,10 +110,12 @@ class Invoice{
 	mysqli_query($this->dbConnect, $sqlInsert);	
 	}
 
-	public function validateInvoice($invoice_id) {
+	public function validateInvoice($invoice_id, $customerId) {
 		$sqlQuery = "
 		SELECT * FROM ".$this->invoiceOrderTable." 
-		WHERE user_id = '".$_SESSION['userid']."' AND order_id='".$invoice_id."'";
+		WHERE user_id = '".$_SESSION['userid']."'
+		AND order_id='".$invoice_id."'
+		AND customer_id='".$customerId."'";
 		$count = $this->getNumRows($sqlQuery);
 		if($count) {
 			return true;
@@ -113,13 +126,15 @@ class Invoice{
 	public function getInvoiceList(){
 		$sqlQuery = "
 			SELECT * FROM ".$this->invoiceOrderTable." 
-			WHERE user_id = '".$_SESSION['userid']."'";
+			WHERE user_id = '".$_SESSION['userid']."'
+			ORDER BY order_date ASC";
 		return  $this->getData($sqlQuery);
 	}
 	public function getInvoiceListByCustomer($customerId){
 		$sqlQuery = "
 			SELECT * FROM ".$this->invoiceOrderTable." 
-			WHERE user_id = '".$_SESSION['userid']."' AND customer_id = '$customerId'";
+			WHERE user_id = '".$_SESSION['userid']."' AND customer_id = '$customerId'
+			ORDER BY order_date ASC";
 		return  $this->getData($sqlQuery);
 	}	
 	public function getInvoice($invoiceId){
@@ -153,9 +168,10 @@ class Invoice{
 
 	public function getTotalDue ($invoiceId) {
 		$sqlQuery = "
-		SELECT * FROM ".$this->invoiceOrderTable."
+		SELECT order_total_amount_due FROM ".$this->invoiceOrderTable."
 		WHERE order_id = '".$invoiceId."'";
-		return  $this->getField($sqlQuery);
+		$result = $this->getSingleData($sqlQuery);
+		return $result['order_total_amount_due'];
 	}
 
 	public function insertItems($POST) {
@@ -179,6 +195,23 @@ class Invoice{
 		SELECT * FROM ".$this->productTable."
 		WHERE user_id = '".$_SESSION['userid']."'";
 		return  $this->getData($sqlQuery);
+	}
+
+	public function NepaliDate($engDate, $nepDateObj){
+		
+		$date = array();
+		$invoiceYear = date("Y", strtotime($engDate));
+		$invoiceMonth = date("m", strtotime($engDate));
+		$invoiceDay = date("d", strtotime($engDate));
+
+		$date_ne = $nepDateObj->get_nepali_date($invoiceYear, $invoiceMonth, $invoiceDay);
+		$year = $date_ne['y'];
+		($date_ne['m'] < 10) ? $month = 0 . $date_ne['m'] : $month = $date_ne['m'];
+		($date_ne['d'] < 10) ? $day = 0 . $date_ne['d'] : $day = $date_ne['d'];
+		$date['y'] = $date_ne['y'];
+		$date['m'] = $date_ne['m'];
+		$date['d'] = $date_ne['d'];
+		return $date;
 	}
 }
 ?>

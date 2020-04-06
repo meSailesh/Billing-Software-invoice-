@@ -8,10 +8,10 @@ $ledger = new Ledger();
 $invoice->checkLoggedIn();
 if(!empty($_GET['update_id'])){
   $customerId = $_GET['update_id'];
+  $totalDue = $ledger -> getTotalBalance($customerId);
   $companyDetails = $ledger->getCustomer($customerId);
-  $transactions = $ledger->showTransactions($customerId);
-  $arrayTransaction = array($transactions);
- // print_r($transactions);
+  $transactions = $ledger->getAllTransaction($customerId);
+  //$arrayTransaction = array($transactions);
 }
 ?>
 <script src="js/invoice.js"></script>
@@ -20,7 +20,7 @@ if(!empty($_GET['update_id'])){
 <div class="container invoice-list-container">	
   <div><a class="btn btn-warning back_btn" href="javascript:history.go(-1)">&#8592 Go Back</a></div>
 	
-	  <h2 class="title">PHP Invoice System</h2>	
+	  <h2 class="title">Transactions</h2>	
     
  
 
@@ -42,37 +42,72 @@ if(!empty($_GET['update_id'])){
  </div>
  </div>
  </div>
-  	  
-      <table id="data-table" class="table table-condensed table-striped">
-        <thead>
-          <tr>
-            <th>Invoice Date</th>
-            <th>Invoice Number</th>
-            <th>Debited Amount</th>
-            <th>Receipt Date</th>
-            <th>Receipt Number</th>
-            <th>Credited Amount</th>
-            <th>Balance</th>
-          </tr>
-        </thead>
-        <?php		
 
-	        foreach($arrayTransaction as $transaction){
-      $invoiceDate = date("d/M/Y", strtotime($transaction["order_date"]));
-      $receiptDate = date("d/M/Y", strtotime($transaction["created_date"]));
-            echo '
-              <tr>
-                <td>'.$invoiceDate.'</td>
-                <td>'.$transaction["order_id"].'</td>
-                <td>'.$transaction["order_total_amount_due"].'</td>
-                <td>'.$receiptDate.'</td>
-                <td>'.$transaction["receipt_id"].'</td>
-                <td>'.$transaction["amount_paid"].'</td>
-                <td>'.$transaction["amount_paid"].'</td>
-                </tr>
-            ';
-        }       
-        ?>
-      </table>	
+    <div class="container-fluid">
+    <div class="row alert alert-info text-center"><b>Total Due Balance: Rs <?php echo $totalDue ?><b></div>
+    <?php
+  foreach($transactions as $transaction)
+  {
+    $invoiceId = $transaction["order_id"];
+    $initialPayment = $ledger ->initialPayment($invoiceId);
+    //print_r($initialPayment);
+    $transactionDetails = $ledger -> TransactionDetails($invoiceId);
+    $InvoiceDue = $invoice ->getTotalDue($invoiceId);
+
+    if($initialPayment['paid'] > 0){
+      $paymentDetails = array();
+      $paymentDetails['Id'] = 0;
+      $paymentDetails['Date'] = $initialPayment['date'];
+      $paymentDetails['Amount'] = $initialPayment['paid'];
+      $paymentDetails['Type'] = "Initial Payment";
+      array_push($transactionDetails, $paymentDetails);
+    }
+  
+   //print_r($transactionDetails);
+  ?>
+    <div class="row">
+    <div class="col-lg-2"></div>
+    <div class="col-lg-8">
+    <div class="panel panel-primary">
+    <div class="panel-heading">Invoice Details</div>
+    <div class="panel-body">
+    <table id="data-table" class="table table-condensed">
+    <thead>
+      <tr>
+      <th>Transaction Id</th>
+        <th>Transaction Date</th>
+        <th>Transaction Type</th>
+        <th>Amount</th>          
+      </tr>
+    </thead>
+    <tbody>
+   
+      <?php
+        foreach($transactionDetails as $detail){
+          echo'
+          <tr>
+             <td>'.$detail['Id'].'</td>
+             <td>'.$detail['Date'].'</td>
+             <td>'.$detail['Type'].'</td>
+             <td>'.$detail['Amount'].'</td>
+             </tr>';    
+        } 
+      ?>
+    
+    </tbody>
+    </table>
+    </div>
+    <div class="panel-footer">Invoice-Due: Rs <?php echo $InvoiceDue; ?></div>
+  </div>
+    </div>
+    <div class="col-lg-2"></div>
+    
+    </div>
+  
+  <?php
+  }
+ ?>
+<p class="alert alert-warning">Note* : Transaction id equals invoice id and receipt id for credit and debit transactions respectively.</p>
+</div>
 </div>	
 <?php include('footer.php');?>

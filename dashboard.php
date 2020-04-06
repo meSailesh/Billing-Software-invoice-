@@ -2,8 +2,10 @@
 session_start();
 include('header.php');
 include 'Invoice.php';
+include 'Ledger.php';
 $companyNameError = false;
 $invoice = new Invoice();
+$ledger = new Ledger();
 $invoice->checkLoggedIn();?>
 <script src="js/invoice.js"></script>
 <link href="css/style.css" rel="stylesheet">

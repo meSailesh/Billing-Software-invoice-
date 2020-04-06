@@ -30,6 +30,15 @@ class Ledger{
 		}
 		return $data;
 	}
+	private function getSingleData($sqlQuery) {
+		$result = mysqli_query($this->dbConnect, $sqlQuery);
+		if(!$result){
+			die('Error in query: '. mysqli_error());
+		}
+	
+		$data = mysqli_fetch_assoc($result);
+		return $data;
+	}
 
 	private function getField($sqlQuery) {
 		$result = mysqli_query($this->dbConnect, $sqlQuery);
@@ -107,16 +116,45 @@ class Ledger{
 		$sqlQuery = "
 			DELETE FROM ".$this->CustomerTable." 
 			WHERE customer_id = '".$customerId."'";
-		mysqli_query($this->dbConnect, $sqlQuery);		
+			mysqli_query($this->dbConnect, $sqlQuery);		
 		return 1;
 	}
 
-	public function showTransactions($customerId){
+	public function getTotalBalance($customerId) {
 		$sqlQuery = "
-		SELECT A.order_date, A.order_id, A.order_total_amount_due, B.created_date,B.receipt_id, B.amount_paid FROM invoice_order A LEFT JOIN receipt B ON A.type = B.type WHERE A.customer_id = '$customerId' UNION ALL SELECT A.order_date, A.order_total_amount_due,A.order_id, B.created_date, B.amount_paid,B.receipt_id FROM invoice_order A RIGHT JOIN receipt B ON A.type = B.type WHERE B.Customer_id = '$customerId'" ;
+		SELECT coalesce(SUM(order_total_amount_due),0) as sum FROM ".$this->InvoiceTable."
+		WHERE customer_id = '".$customerId."'";
+		$result = $this->getSingleData($sqlQuery);
+		return $result['sum'];
+	}
+
+	public function initialPayment($invoiceId){
+		$sqlQuery = "
+		SELECT coalesce(order_amount_paid,0) as paid, order_date as date FROM ".$this->InvoiceTable."
+		WHERE order_id = '".$invoiceId."'";
+		return $this->getSingleData($sqlQuery);
+	}
+
+	public function getAllTransaction($customerId){
+		$sqlQuery = "
+		SELECT order_id FROM ".$this->InvoiceTable."
+		WHERE customer_id = '".$customerId."'";
+		return $this->getData($sqlQuery);
+	}
+
+	
+	public function TransactionDetails($invoiceId){
+		$sqlQuery = "select 
+		order_id as 'Id', order_total_after_tax as 'Amount', order_date as 'Date', 'Credit' as 'Type'
+		from ".$this->InvoiceTable." 
+		where order_id=".$invoiceId."
+		UNION
+		select 
+		r.receipt_id as 'Id', r.amount_paid as 'Amount', r.created_date as 'Date', 'Debit' as 'Type'
+		from ".$this->ReceiptTable." r
+		join ".$this->InvoiceTable." o on o.order_id = r.invoice_id where o.order_id=".$invoiceId."
+		order by date";
 		$result = mysqli_query($this->dbConnect, $sqlQuery);	
-		$row = mysqli_fetch_array($result, MYSQLI_ASSOC);
-		return $row;
+		return $this->getData($sqlQuery);
 	}
 }
-?> 
